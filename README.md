@@ -268,28 +268,38 @@ El microservicio de IA expone documentación interactiva en `http://localhost:80
 
 ## Casos de uso cubiertos
 
-| CU    | Caso de uso                 | Capa principal          |
-| ----- | --------------------------- | ----------------------- |
-| CU-01 | Iniciar sesión              | Spring Boot             |
-| CU-02 | Recuperar contraseña        | Spring Boot             |
-| CU-03 | Cerrar sesión               | Spring Boot             |
-| CU-04 | Registrar empresa           | Spring Boot             |
-| CU-05 | Gestionar usuarios y roles  | Spring Boot             |
-| CU-06 | Gestionar unidades          | Spring Boot             |
-| CU-07 | Asignar personal            | Spring Boot             |
-| CU-08 | Crear políticas             | Spring Boot             |
-| CU-09 | Modelado visual UML         | Spring Boot + Angular   |
-| CU-10 | Reglas de decisión          | Spring Boot             |
-| CU-11 | Formularios dinámicos       | Spring Boot             |
-| CU-12 | Iniciar y seguir trámites   | Spring Boot             |
-| CU-13 | Gestionar bandeja           | Spring Boot             |
-| CU-14 | Ejecutar tareas             | Spring Boot             |
-| CU-15 | Gestionar evidencias        | Spring Boot             |
-| CU-16 | Notificaciones y alertas    | Spring Boot + WebSocket |
-| CU-17 | Asistencia IA               | FastAPI                 |
-| CU-18 | Registrar informes de voz   | FastAPI                 |
-| CU-19 | Analizar cuellos de botella | FastAPI                 |
-| CU-20 | Reportes y dashboard        | Spring Boot + FastAPI   |
+El proyecto cubre 28 casos de uso en total: CU-01 a CU-20 corresponden al primer parcial y CU-21 a CU-28 al segundo parcial.
+
+| CU    | Caso de uso                                       | Capa principal          |
+| ----- | ------------------------------------------------- | ----------------------- |
+| CU-01 | Iniciar sesión                                    | Spring Boot             |
+| CU-02 | Recuperar contraseña                              | Spring Boot             |
+| CU-03 | Cerrar sesión                                     | Spring Boot             |
+| CU-04 | Registrar empresa                                 | Spring Boot             |
+| CU-05 | Gestionar usuarios y roles                        | Spring Boot             |
+| CU-06 | Gestionar unidades                                | Spring Boot             |
+| CU-07 | Asignar personal                                  | Spring Boot             |
+| CU-08 | Crear políticas                                   | Spring Boot             |
+| CU-09 | Modelado visual UML                               | Spring Boot + Angular   |
+| CU-10 | Reglas de decisión                                | Spring Boot             |
+| CU-11 | Formularios dinámicos                             | Spring Boot             |
+| CU-12 | Iniciar y seguir trámites                         | Spring Boot             |
+| CU-13 | Gestionar bandeja                                 | Spring Boot             |
+| CU-14 | Ejecutar tareas                                   | Spring Boot             |
+| CU-15 | Gestionar evidencias                              | Spring Boot             |
+| CU-16 | Notificaciones y alertas                          | Spring Boot + WebSocket |
+| CU-17 | Asistencia IA                                     | FastAPI                 |
+| CU-18 | Registrar informes de voz                         | FastAPI                 |
+| CU-19 | Analizar cuellos de botella                       | FastAPI                 |
+| CU-20 | Reportes y dashboard                              | Spring Boot + FastAPI   |
+| CU-21 | Gestión documental S3/MinIO                       | FastAPI + Angular       |
+| CU-22 | Colaboración documental en tiempo real            | Frontend + WebSocket    |
+| CU-23 | Almacenamiento y repositorio por trámite          | FastAPI + MinIO         |
+| CU-24 | Deep learning: mejor ruta del trámite             | FastAPI + TensorFlow    |
+| CU-25 | Deep learning: cuellos de botella y demoras       | FastAPI + TensorFlow    |
+| CU-26 | Deep learning: detección de anomalías y prioridad | FastAPI + TensorFlow    |
+| CU-27 | Asistente IA por voz, texto y documentación       | FastAPI + Angular       |
+| CU-28 | Agente clasificador y reportes dinámicos          | FastAPI + Angular       |
 
 ## Comunicación entre servicios
 
