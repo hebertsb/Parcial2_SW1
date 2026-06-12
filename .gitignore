@@ -5,6 +5,7 @@
 
 # ---- Documentación (no subir .md ni .txt al repo) ----
 *.md
+!/README.md
 *.txt
 !requirements.txt
 
