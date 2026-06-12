@@ -1,8 +1,5 @@
 from pymongo import MongoClient
 
-client = MongoClient('mongodb+srv://hebertsb08_db_user:g8SspkYSGab87Ecz@cluster0.lbxfuez.mongodb.net/nexusflow_oficial?retryWrites=true&w=majority')
-db = client['nexusflow_oficial']
-
 # 1. Cuantos Bitacora conectan con Tramite real
 print("=== JOIN Bitacora -> Tramite ===")
 resultado = list(db.Bitacora.aggregate([
