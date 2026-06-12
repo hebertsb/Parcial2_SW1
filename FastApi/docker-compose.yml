@@ -1,0 +1,45 @@
+# ============================================================
+# NexusFlow AI - Docker Compose
+# ============================================================
+# Para desarrollo local y despliegue con el stack completo
+# ============================================================
+
+services:
+  # ---- Microservicio de IA (FastAPI) ----
+  nexusflow-ai:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nexusflow-ai
+    ports:
+      - "8000:8000"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - OPENAI_MODEL=${OPENAI_MODEL:-gpt-4o-mini}
+      - WHISPER_MODEL=${WHISPER_MODEL:-whisper-1}
+      - AI_MODE=${AI_MODE:-local}
+      - SPRING_BOOT_URL=${SPRING_BOOT_URL:-http://host.docker.internal:8080}
+      - CORS_ORIGINS=${CORS_ORIGINS:-*}
+      - DEBUG=${DEBUG:-false}
+    env_file:
+      - .env
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    networks:
+      - nexusflow-network
+    # Recursos limitados para AWS Free Tier
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: "0.5"
+
+networks:
+  nexusflow-network:
+    name: nexusflow-network
+    driver: bridge

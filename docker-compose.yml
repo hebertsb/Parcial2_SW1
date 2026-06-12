@@ -1,0 +1,178 @@
+version: '3.8'
+
+# ============================================================
+# NexusFlow-AI — Docker Compose
+# Orquesta: MongoDB + Spring Boot + FastAPI + Angular (nginx)
+# Uso: docker-compose up --build
+# ============================================================
+
+services:
+
+  # ---- Base de Datos ----
+  mongodb:
+    image: mongo:7.0
+    container_name: nexusflow-mongodb
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_DATABASE: nexusflow_oficial
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - nexusflow-network
+    ports:
+      - "27017:27017"
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+
+  # ---- Backend Spring Boot ----
+  spring-backend:
+    build:
+      context: ./nexusflow-backend-v2
+      dockerfile: Dockerfile
+    container_name: nexusflow-backend
+    restart: unless-stopped
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    environment:
+      SERVER_PORT: 9090
+      MONGODB_URI: ${MONGODB_URI:-mongodb://mongodb:27017/nexusflow_oficial}
+      JWT_SECRET: ${JWT_SECRET}
+      MAIL_USERNAME: ${MAIL_USERNAME}
+      MAIL_PASSWORD: ${MAIL_PASSWORD}
+      FASTAPI_URL: http://fastapi-service:8000
+      STORAGE_LOCATION: /app/evidencias
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-http://localhost:4200,http://localhost:3000}
+    volumes:
+      - evidencias_data:/app/evidencias
+    ports:
+      - "9090:9090"
+    networks:
+      - nexusflow-network
+    healthcheck:
+      test: ["CMD-SHELL", "nc -z localhost 9090 || exit 1"]
+      interval: 15s
+      timeout: 10s
+      retries: 8
+      start_period: 60s
+
+  # ---- Microservicio FastAPI (IA) ----
+  fastapi-service:
+    build:
+      context: ./FastApi
+      dockerfile: Dockerfile
+    container_name: nexusflow-fastapi
+    restart: unless-stopped
+    depends_on:
+      spring-backend:
+        condition: service_healthy
+    environment:
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      OPENAI_BASE_URL: ${OPENAI_BASE_URL:-https://api.groq.com/openai/v1}
+      OPENAI_MODEL: ${OPENAI_MODEL:-llama-3.3-70b-versatile}
+      WHISPER_MODEL: ${WHISPER_MODEL:-whisper-large-v3}
+      HOST: 0.0.0.0
+      PORT: 8000
+      DEBUG: "false"
+      SPRING_BOOT_URL: http://spring-backend:9090
+      MONGODB_URI: ${MONGODB_URI:-mongodb+srv://hebertsb08_db_user:g8SspkYSGab87Ecz@cluster0.lbxfuez.mongodb.net/nexusflow_oficial}
+      MONGODB_DATABASE: ${MONGODB_DATABASE:-nexusflow_oficial}
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost}
+      AI_MODE: ${AI_MODE:-api}
+      # MinIO / S3 compatible
+      S3_ENDPOINT_URL: http://minio:9000
+      S3_ACCESS_KEY: nexusflow
+      S3_SECRET_KEY: nexusflow123
+      S3_BUCKET_NAME: nexusflow-documentos
+      S3_REGION: us-east-1
+    volumes:
+      - tf_models_data:/app/ml_models
+    ports:
+      - "8000:8000"
+    networks:
+      - nexusflow-network
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+
+  # ---- OnlyOffice — Edición colaborativa de documentos (como Google Docs) ----
+  # Word, Excel, PowerPoint — múltiples usuarios simultáneos via WebSocket
+  onlyoffice:
+    image: onlyoffice/documentserver:latest
+    container_name: nexusflow-onlyoffice
+    restart: unless-stopped
+    environment:
+      JWT_ENABLED: "false"
+    ports:
+      - "8080:80"
+    volumes:
+      - onlyoffice_data:/var/www/onlyoffice/Data
+      - onlyoffice_logs:/var/log/onlyoffice
+      - ./onlyoffice-local.json:/etc/onlyoffice/documentserver/local.json:ro
+    networks:
+      - nexusflow-network
+
+  # ---- MinIO — Almacenamiento S3-compatible (GRATUITO) ----
+  minio:
+    image: minio/minio:latest
+    container_name: nexusflow-minio
+    restart: unless-stopped
+    environment:
+      MINIO_ROOT_USER: nexusflow
+      MINIO_ROOT_PASSWORD: nexusflow123
+    command: server /data --console-address ":9001"
+    ports:
+      - "9000:9000"    # API S3-compatible
+      - "9001:9001"    # Consola web MinIO
+    volumes:
+      - minio_data:/data
+    networks:
+      - nexusflow-network
+    healthcheck:
+      test: ["CMD", "mc", "ready", "local"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  # ---- Frontend Angular (nginx) ----
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: nexusflow-frontend
+    restart: unless-stopped
+    depends_on:
+      - spring-backend
+    ports:
+      - "80:80"
+    networks:
+      - nexusflow-network
+
+# ---- Redes ----
+networks:
+  nexusflow-network:
+    driver: bridge
+    name: nexusflow-network
+
+# ---- Volúmenes persistentes ----
+volumes:
+  mongodb_data:
+    name: nexusflow_mongodb_data
+  evidencias_data:
+    name: nexusflow_evidencias_data
+  minio_data:
+    name: nexusflow_minio_data
+  onlyoffice_data:
+    name: nexusflow_onlyoffice_data
+  onlyoffice_logs:
+    name: nexusflow_onlyoffice_logs
+  tf_models_data:
+    name: nexusflow_tf_models_data

@@ -1,0 +1,121 @@
+# ============================================================
+# NexusFlow-AI — Monorepo .gitignore
+# Cubre: Spring Boot + FastAPI + Angular
+# ============================================================
+
+# ---- Documentación (no subir .md ni .txt al repo) ----
+*.md
+*.txt
+!requirements.txt
+
+# ---- Carpetas de documentación / material de apoyo ----
+**/docs/
+**/flujo_casos_uso/
+**/casos-de-uso/
+
+# ---- Variables de entorno y secretos ----
+.env
+.env.local
+.env.production
+.env.*.local
+*.env
+
+# ---- Spring Boot / Maven ----
+nexusflow-backend-v2/target/
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# ---- FastAPI / Python ----
+FastApi/venv/
+FastApi/__pycache__/
+**/__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+*.so
+.Python
+
+# ---- Angular / Node ----
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
+node_modules/
+npm-debug.log*
+yarn-error.log*
+.npm
+
+# ---- Claude Code ----
+.claude/
+
+# ---- IDEs ----
+.idea/
+*.iws
+*.iml
+*.ipr
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/
+*.sublime-workspace
+*.sublime-project
+.project
+.classpath
+.settings/
+.springBeans
+.sts4-cache
+.factorypath
+.apt_generated
+.c9/
+*.launch
+/nbproject/private/
+/nbbuild/
+/nbdist/
+/.nb-gradle/
+
+# ---- Build artifacts ----
+out-tsc/
+bazel-out/
+coverage/
+/tmp/
+
+# ---- Logs ----
+*.log
+*.bak
+*.tmp
+*.swp
+*.swo
+
+# ---- Sistema operativo ----
+.DS_Store
+Thumbs.db
+desktop.ini
+ehthumbs.db
+
+# ---- Testing ----
+testem.log
+.sass-cache/
+/connect.lock
+/libpeerconnection.log
+/typings
+
+# ---- Angular cache ----
+.angular/cache
+
+# ---- Java/Spring archivos sensibles ----
+*.cer
+*.pfx
+*.keystore
+*.jks

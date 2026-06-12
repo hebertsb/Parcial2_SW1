@@ -1,0 +1,51 @@
+# ---- Entorno virtual Python ----
+venv/
+env/
+.venv/
+.env/
+ENV/
+
+# ---- Secretos y configuracion ----
+.env
+.env.local
+.env.production
+
+# ---- Python cache ----
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+.eggs/
+*.egg-info/
+*.egg
+dist/
+build/
+
+# ---- Testing ----
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# ---- IDEs ----
+.idea/
+.vscode/
+*.sublime-workspace
+
+# ---- Sistema ----
+.DS_Store
+Thumbs.db
+
+# ---- Documentacion ----
+*.md
+*.txt
+!requirements.txt
+
+# ---- Modelos ML persistidos ----
+*.pkl
+*.joblib
+models/
+
+# ---- Logs ----
+*.log

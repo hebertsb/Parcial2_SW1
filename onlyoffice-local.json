@@ -1,0 +1,11 @@
+{
+  "allowPrivateIPAddress": true,
+  "services": {
+    "CoAuthoring": {
+      "server": {
+        "allowPrivateIPAddress": true,
+        "rejectUnauthorized": false
+      }
+    }
+  }
+}

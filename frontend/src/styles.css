@@ -1,0 +1,120 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
+
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+body {
+  background-color: #F1F5F9;
+  font-family: 'Inter', sans-serif;
+  @apply text-slate-800 antialiased;
+}
+
+.canvas-grid {
+  background-image: radial-gradient(#CBD5E1 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.module-card {
+  border-left: 4px solid #3B82F6 !important;
+}
+
+.ia-fab {
+  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
+}
+
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.transform-style-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+.material-symbols-outlined.fill-icon {
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+@layer utilities {
+  .scale-98 { transform: scale(0.98); }
+}
+
+/* TipTap editor — restaurar estilos eliminados por Tailwind preflight */
+.ProseMirror ul {
+  list-style-type: disc;
+  padding-left: 1.8em;
+  margin: 0.4em 0;
+}
+
+.ProseMirror ol {
+  list-style-type: decimal;
+  padding-left: 1.8em;
+  margin: 0.4em 0;
+}
+
+.ProseMirror li {
+  margin: 0.2em 0;
+}
+
+.ProseMirror img {
+  max-width: 35%;
+  height: auto;
+  display: block;
+  margin: 0.8em auto;
+}
+
+/* Párrafos con respiración similar al Word */
+.ProseMirror p {
+  margin: 0.35em 0;
+  line-height: 1.5;
+}
+
+/* Headings con espacio visual como Word */
+.ProseMirror h1 {
+  font-size: 1.5em;
+  font-weight: 700;
+  margin-top: 1.6em;
+  margin-bottom: 0.5em;
+  line-height: 1.3;
+}
+
+.ProseMirror h2 {
+  font-size: 1.25em;
+  font-weight: 700;
+  margin-top: 1.4em;
+  margin-bottom: 0.4em;
+  line-height: 1.3;
+}
+
+.ProseMirror h3 {
+  font-size: 1.1em;
+  font-weight: 700;
+  margin-top: 1.2em;
+  margin-bottom: 0.3em;
+}
+
+.ProseMirror h4, .ProseMirror h5, .ProseMirror h6 {
+  font-weight: 700;
+  margin-top: 1em;
+  margin-bottom: 0.3em;
+}
+
+/* Separación visual entre bloques de lista y párrafos */
+.ProseMirror ul + p,
+.ProseMirror ol + p,
+.ProseMirror p + ul,
+.ProseMirror p + ol {
+  margin-top: 0.6em;
+}

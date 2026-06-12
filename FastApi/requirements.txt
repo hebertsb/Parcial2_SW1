@@ -1,0 +1,54 @@
+# ============================================================
+# NexusFlow AI - FastAPI Service Dependencies
+# ============================================================
+# Compatibles con Python 3.11+
+# ============================================================
+
+# Framework
+fastapi>=0.115.0
+uvicorn[standard]>=0.34.0
+
+# Modelos y validación
+pydantic>=2.11.0
+pydantic-settings>=2.9.0
+
+# Archivos multipart (audio upload)
+python-multipart>=0.0.20
+
+# Variables de entorno
+python-dotenv>=1.1.0
+
+# Cliente HTTP (comunicación con Spring Boot)
+httpx>=0.28.0
+
+# OpenAI (GPT-4o-mini + Whisper API)
+openai>=1.82.0
+
+# ============================================================
+# Motor de Aprendizaje (ML desde Bitácora)
+# ============================================================
+scikit-learn>=1.6.0
+pandas>=2.2.0
+numpy>=2.0.0
+joblib>=1.4.0
+pymongo>=4.10.0
+
+# ============================================================
+# Almacenamiento S3 / MinIO (segundo parcial)
+boto3>=1.34.0
+
+# Deep Learning — TensorFlow (segundo parcial)
+# ============================================================
+tensorflow-cpu>=2.16.0
+
+# Reportes dinámicos (segundo parcial)
+openpyxl>=3.1.0
+reportlab>=4.0.0
+python-docx>=1.1.0
+mammoth>=1.6.0
+beautifulsoup4>=4.12.0
+
+# Testing
+pytest>=8.3.0
+pytest-asyncio>=0.25.0
+
